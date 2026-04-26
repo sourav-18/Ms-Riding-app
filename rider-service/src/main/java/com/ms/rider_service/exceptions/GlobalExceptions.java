@@ -22,4 +22,28 @@ public class GlobalExceptions {
                         HttpStatus.BAD_REQUEST.value(),
                         errorsMessage));
     }
+
+    @ExceptionHandler(MobileNoAlreadyExistException.class)
+    public ResponseEntity<ApiResponseDTO<Void>> handleMobileNoAlreadyExistException(MobileNoAlreadyExistException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponseMapper.error(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage()));
+    }
+
+    @ExceptionHandler(RiderNotFoundException.class)
+    public ResponseEntity<ApiResponseDTO<Void>> handleRiderNotFoundExceptionException(RiderNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponseMapper.error(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ApiResponseDTO<Void>> handleInvalidPasswordExceptionException(InvalidPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponseMapper.error(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage()));
+    }
 }

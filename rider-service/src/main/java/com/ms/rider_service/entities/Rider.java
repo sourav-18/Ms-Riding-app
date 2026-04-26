@@ -18,7 +18,7 @@ public class Rider extends Base{
     @Column(name = "mobile_no",nullable = false,unique = true)
     private String mobileNo;
 
-    @Column(name = "email",unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password",nullable = false)

@@ -1,7 +1,7 @@
 package com.ms.rider_service.mappers;
 
 import com.ms.rider_service.dtos.request.SignupRequestDTO;
-import com.ms.rider_service.dtos.response.RiderResponseDTO;
+import com.ms.rider_service.dtos.response.RiderAuthResponseDTO;
 import com.ms.rider_service.entities.Rider;
 
 public class RiderMapper {
@@ -13,12 +13,13 @@ public class RiderMapper {
         return rider;
     }
 
-    public static RiderResponseDTO toDto(Rider rider){
-       return RiderResponseDTO.builder()
+    public static RiderAuthResponseDTO toAuthDto(Rider rider,String token){
+       return RiderAuthResponseDTO.builder()
                .id(rider.getId())
                .name(rider.getName())
                .mobileNo(rider.getMobileNo())
                .email(rider.getEmail())
+               .token(token)
                .build();
     }
 }
