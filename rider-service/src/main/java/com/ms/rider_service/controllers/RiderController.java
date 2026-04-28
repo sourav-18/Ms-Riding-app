@@ -23,7 +23,6 @@ public class RiderController {
     public Object locationUpdate(
             HttpServletRequest request,
             @Valid @RequestBody LocationUpdateRequestDTO body){
-        System.out.println(request.getAttribute(ConstantUtil.REQUEST_RIDER_ID_KEY));
         Long loggedInRiderId= Long.valueOf((String) request.getAttribute(ConstantUtil.REQUEST_RIDER_ID_KEY));
         riderService.locationUpdate(body,loggedInRiderId);
         return ResponseEntity.status(HttpStatus.OK)
