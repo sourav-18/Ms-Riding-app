@@ -22,8 +22,8 @@ public class FairController {
     private final FairService fairService;
 
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<FairResponseDTO>>> getFair(@Valid @ModelAttribute FairRequestDTO body){
-        List<FairResponseDTO> response=fairService.getFairList(body);
+    public ResponseEntity<ApiResponseDTO<List<FairResponseDTO>>> getFair(@ModelAttribute FairRequestDTO request){
+        List<FairResponseDTO> response=fairService.getFairList(request);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponseMapper.success(HttpStatus.OK.value(), "Fair list fetch successfully",response));
 

@@ -1,7 +1,10 @@
 package com.ms.rider_service.services.impl;
 
 import com.ms.rider_service.dtos.request.LocationUpdateRequestDTO;
+import com.ms.rider_service.dtos.response.CurrentLocationResponseDTO;
+import com.ms.rider_service.entities.Rider;
 import com.ms.rider_service.exceptions.RiderNotFoundException;
+import com.ms.rider_service.mappers.S2SMapper;
 import com.ms.rider_service.repositories.RiderRepository;
 import com.ms.rider_service.services.RiderService;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +16,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class RiderServiceImpl implements RiderService {
 
     private final RiderRepository riderRepository;
+
     @Override
     @Transactional
-    public void locationUpdate(LocationUpdateRequestDTO body,Long loggedInRiderId) {
-       int updateCount= riderRepository.locationUpdateById(loggedInRiderId,body.latitude(),body.longitude());
-       if(updateCount==0){
-           throw new RiderNotFoundException(loggedInRiderId,"Rider not found");
-       }
-       return;
+    public void locationUpdate(LocationUpdateRequestDTO body, Long loggedInRiderId) {
+        int updateCount = riderRepository.locationUpdateById(loggedInRiderId, body.latitude(), body.longitude());
+        if (updateCount == 0) {
+            throw new RiderNotFoundException(loggedInRiderId);
+        }
+        return;
+    }
+
+    @Override
+    public CurrentLocationResponseDTO getCurrentLocation(Long riderId) {
+        Rider rider = riderRepository.findById(riderId).orElseThrow(() -> new RiderNotFoundException(riderId));
+        return S2SMapper.toCurrentLocationResponseDTO(rider);
     }
 }

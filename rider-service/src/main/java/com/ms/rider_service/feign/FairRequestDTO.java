@@ -1,4 +1,4 @@
-package com.ms.fair_service.dtos.request;
+package com.ms.rider_service.feign;
 
 
 import jakarta.validation.constraints.NotNull;
