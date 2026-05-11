@@ -3,6 +3,7 @@ package com.ms.rider_service.services.impl;
 import com.ms.rider_service.dtos.request.LocationUpdateRequestDTO;
 import com.ms.rider_service.dtos.response.CurrentLocationResponseDTO;
 import com.ms.rider_service.entities.Rider;
+import com.ms.rider_service.exceptions.CurrentLocationNotSetException;
 import com.ms.rider_service.exceptions.RiderNotFoundException;
 import com.ms.rider_service.mappers.S2SMapper;
 import com.ms.rider_service.repositories.RiderRepository;
@@ -30,6 +31,9 @@ public class RiderServiceImpl implements RiderService {
     @Override
     public CurrentLocationResponseDTO getCurrentLocation(Long riderId) {
         Rider rider = riderRepository.findById(riderId).orElseThrow(() -> new RiderNotFoundException(riderId));
+        if(rider.getLatitude()==null||rider.getLongitude()==null){
+            throw new CurrentLocationNotSetException("your currentLocation not set yet.");
+        }
         return S2SMapper.toCurrentLocationResponseDTO(rider);
     }
 }

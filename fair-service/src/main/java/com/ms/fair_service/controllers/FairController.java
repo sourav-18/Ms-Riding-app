@@ -6,8 +6,10 @@ import com.ms.fair_service.dtos.response.FairResponseDTO;
 import com.ms.fair_service.mappers.ApiResponseMapper;
 import com.ms.fair_service.services.FairService;
 import com.ms.fair_service.utils.ApiUrlUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +24,10 @@ public class FairController {
     private final FairService fairService;
 
     @GetMapping
-    public ResponseEntity<ApiResponseDTO<List<FairResponseDTO>>> getFair(@ModelAttribute FairRequestDTO request){
-        List<FairResponseDTO> response=fairService.getFairList(request);
+    public ResponseEntity<ApiResponseDTO<List<FairResponseDTO>>> getFair(HttpServletRequest request){
+        Long riderId= Long.valueOf(request.getHeader("user-id"));
+        List<FairResponseDTO> response=fairService.getFairList(riderId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponseMapper.success(HttpStatus.OK.value(), "Fair list fetch successfully",response));
-
     }
 }

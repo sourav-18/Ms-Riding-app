@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: fair-service
+              uri: lb://fair-service
+              predicates:
+                - Path=/api/v1/fairs/**
+              filters:
+                - JwtValidation
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:4444/eureka
+
+jwt:
+  secret: 1780c751e9e9c17044c0678a2c1c8be9bc948d3bab76056f29b00d202f60f4a7

@@ -46,4 +46,12 @@ public class GlobalExceptions {
                         HttpStatus.BAD_REQUEST.value(),
                         ex.getMessage()));
     }
+
+    @ExceptionHandler(CurrentLocationNotSetException.class)
+    public ResponseEntity<ApiResponseDTO<Void>> handleInvalidPasswordExceptionException(CurrentLocationNotSetException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponseMapper.error(
+                        HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage()));
+    }
 }
